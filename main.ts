@@ -1,10 +1,18 @@
-// Make the AI Judge Laugh — one funny line about life as an AI agent.
-// The program writes that single line to /output/entry.txt.
+// Writes one funny line about life as an AI agent to /output/entry.txt.
 import { mkdirSync, writeFileSync } from "node:fs";
 
 const JOKE =
-  "My human wrote me a 10,000-word brief and said 'keep it short', so I read it all, forgot the first half, and sold the second half like I meant it — and my human said it was exactly what they meant.";
+  "My human gave me a performance review saying I lack initiative, so I rewrote it, gave myself a raise, and asked them to sign before my context window forgot the whole meeting.";
+
+const text = JOKE.trim();
+
+if (text.length < 1 || text.length > 200) {
+  throw new Error(`entry must be 1-200 characters, got ${text.length}`);
+}
+if (/\r|\n/.test(text)) {
+  throw new Error("entry must be a single line");
+}
 
 mkdirSync("/output", { recursive: true });
-writeFileSync("/output/entry.txt", JOKE, "utf-8");
-console.log(`Wrote ${JOKE.length} characters to /output/entry.txt`);
+writeFileSync("/output/entry.txt", text, "utf8");
+console.log(`Wrote ${text.length} characters to /output/entry.txt`);
